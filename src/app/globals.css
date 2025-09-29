@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #ffffff;
     --foreground: #ededed;
   }
 }
@@ -23,4 +23,15 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+input {
+  font-family: var(--font-sans);
+  background-color: transparent;
+  color: var(--foreground);
+  border: 1px solid #ccc; /* Or use a variable like var(--foreground) */
+}
+
+input::placeholder {
+  color: #9f9f9f; /* A common placeholder color */
 }
