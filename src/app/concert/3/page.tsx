@@ -78,7 +78,7 @@ const magicmanEvent: Event = {
             <div className="mt-4 space-y-2">
               <div className="flex flex-col items-center mb-2">
                 <Image
-                  src="/img/magicman_2_world_tour.jpg"
+                  src="/img/Magicman_2_world_tour.jpg"
                   alt="PLAVE Asia Tour"
                   width={300}
                   height={300}
