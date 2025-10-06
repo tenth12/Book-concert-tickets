@@ -24,9 +24,6 @@ export default function SelectSeatPage() {
   const zone = (search.get('zone') || 'VIP').toUpperCase();
   const concertId = search.get("concert") || "";
 
-  const concert = concerts.find(c => c.id === concertId);
-  if (!concert) return <p style={{ textAlign: "center", marginTop: 40 }}>ไม่พบคอนเสิร์ต</p>;
-
   const [seats] = useState<Seat[]>(() => makeSeats(12, 15, zone));
   const [selected, setSelected] = useState<string[]>([]);
   const MAX_SELECT = 6;
@@ -39,6 +36,9 @@ export default function SelectSeatPage() {
     return map[zone] ?? '#888';
   }, [zone]);
 
+  const concert = concerts.find(c => c.id === concertId);
+  if (!concert) return <p style={{ textAlign: "center", marginTop: 40 }}>ไม่พบคอนเสิร์ต</p>;
+  
   const price = concert.prices[zone] ?? 0;
   const total = selected.length * price;
 
