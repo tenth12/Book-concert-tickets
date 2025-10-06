@@ -47,23 +47,23 @@ export default function AdminPage() {
               className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition"
             >
               <h3 className="text-lg font-semibold text-red-600 mb-1">
-                {concert.name}
+                {concert.title}
               </h3>
-              <p className="text-sm text-gray-600">📅 {concert.date}</p>
-              <p className="text-sm text-gray-600">📍 {concert.location}</p>
+              <p className="text-sm text-gray-600">📅 {concert.dateLong}</p>
+              <p className="text-sm text-gray-600">📍 {concert.subtitle}</p>
               <p className="mt-2 text-sm">
-                💰 <span className="font-semibold">{concert.price} บาท</span>
+                💰 <span className="font-semibold">{Object.values(concert.prices).join(' / ')} บาท</span>
               </p>
               <p
                 className={`mt-1 text-sm font-semibold ${
-                  concert.status === "ขายหมดแล้ว"
+                  concert.ticketStatus === "SOLD OUT"
                     ? "text-gray-400"
-                    : concert.status === "เปิดขาย"
+                    : concert.ticketStatus === "ON SALE NOW"
                     ? "text-green-600"
                     : "text-blue-600"
                 }`}
               >
-                {concert.status}
+                {concert.ticketStatus}
               </p>
             </div>
           ))}

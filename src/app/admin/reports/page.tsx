@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { concerts, bookings } from "../../../data/mockdata";
+import { concerts, bookings } from "@/data/mockdata";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -11,12 +11,11 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { Bar as BarChart } from "react-chartjs-2";
 
-//  ลงทะเบียนองค์ประกอบของ Chart.js
+// ลงทะเบียนองค์ประกอบ Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-// ใช้ dynamic import 
+// dynamic import ของ react-chartjs-2
 const Bar = dynamic(
   async () => {
     const mod = await import("react-chartjs-2");
@@ -28,20 +27,22 @@ const Bar = dynamic(
 export default function ReportsPage() {
   const totalRevenue = bookings.reduce((sum, b) => sum + b.total, 0);
 
-  // เตรียมข้อมูลสำหรับกราฟ
-  const concertNames = concerts.map((c) => c.name);
-  const bookingCounts = concertNames.map((name) =>
-    bookings.filter((b) => b.concert.includes(name.split(" ")[0])).length
+  // เตรียมข้อมูลกราฟ
+  const concertTitles = concerts.map((c) => c.title);
+
+  const bookingCounts = concertTitles.map((title) =>
+    bookings.filter((b) => b.concert.includes(title.split(" ")[0])).length
   );
-  const concertRevenue = concertNames.map((name) =>
+
+  const concertRevenue = concertTitles.map((title) =>
     bookings
-      .filter((b) => b.concert.includes(name.split(" ")[0]))
+      .filter((b) => b.concert.includes(title.split(" ")[0]))
       .reduce((sum, b) => sum + b.total, 0)
   );
 
-  // ข้อมูลของกราฟแท่ง
+  // data ของกราฟ
   const chartData = {
-    labels: concertNames,
+    labels: concertTitles,
     datasets: [
       {
         label: "จำนวนการจอง",
@@ -62,7 +63,6 @@ export default function ReportsPage() {
     ],
   };
 
-  // ตั้งค่า options ของกราฟ
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -120,22 +120,28 @@ export default function ReportsPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         {concerts.map((c) => {
           const count = bookings.filter((b) =>
-            b.concert.includes(c.name.split(" ")[0])
+            b.concert.includes(c.title.split(" ")[0])
           ).length;
+          const revenue = bookings
+            .filter((b) => b.concert.includes(c.title.split(" ")[0]))
+            .reduce((sum, b) => sum + b.total, 0);
 
           return (
             <div
               key={c.id}
               className="bg-white shadow-md rounded-lg p-4 flex flex-col"
             >
-              <h3 className="text-lg font-semibold mb-2">{c.name}</h3>
+              <h3 className="text-lg font-semibold mb-2">{c.title}</h3>
               <p className="text-gray-700">จำนวนการจอง: {count}</p>
+              <p className="text-gray-700 font-semibold">
+                รายได้รวม: ฿{revenue.toLocaleString()}
+              </p>
             </div>
           );
         })}
       </div>
 
-      {/*  กราฟสรุป (เต็มหน้าจอ) */}
+      {/* กราฟสรุป */}
       <div className="bg-white shadow-md rounded-lg p-6 w-full h-[500px]">
         {/* @ts-ignore */}
         <Bar data={chartData} options={chartOptions} />

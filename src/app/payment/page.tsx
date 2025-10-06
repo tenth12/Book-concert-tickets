@@ -1,7 +1,18 @@
 "use client";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { concerts } from "../../data/mockdata";
 
 export default function PaymentPage() {
+  const search = useSearchParams();
+  const concertId = search.get("concert") || "";
+  const zone = search.get("zone") || "VIP";
+  const seats = search.get("seats")?.split(",") || [];
+
+  const event = concerts.find((c) => c.id === concertId);
+  const pricePerSeat = event?.prices?.[zone] ?? 0;
+  const total = seats.length * pricePerSeat;
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -9,42 +20,51 @@ export default function PaymentPage() {
     method: "promptpay",
   });
 
-  const ticketInfo = {
-    concert: "BLACKPINK WORLD TOUR",
-    zone: "A1",
-    seat: "12",
-    price: 3500,
-  };
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("ส่งข้อมูลไป backend:", form, ticketInfo);
-    alert("จองตั๋วเสร็จสิ้น! ✅");
+    if (!seats.length) {
+      alert("กรุณาเลือกที่นั่งก่อนยืนยัน");
+      return;
+    }
+    alert(
+      `จองตั๋วสำเร็จ! 🎫\nคอนเสิร์ต: ${event?.title ?? "ไม่พบคอนเสิร์ต"}\nโซน: ${zone}\nที่นั่ง: ${
+        seats.join(", ")
+      }\nรวม: ${total.toLocaleString()} บาท\nวิธีชำระเงิน: ${form.method}`
+    );
+
+    console.log("ส่งข้อมูลไป backend:", {
+      ...form,
+      concertId,
+      zone,
+      seats,
+      total,
+    });
   };
 
+  if (!event)
+    return <p className="text-center text-red-600 mt-10">ไม่พบคอนเสิร์ต</p>;
+
   return (
-    <div className="max-w-2xl mx-auto p-6">
-      {/* Ticket Info */}
-      <div className="bg-gray-900 border border-gray-700 p-6 rounded-2xl shadow-lg mb-6 text-white">
-        <h2 className="text-2xl font-bold mb-4 text-red-500">🎟 สรุปการจอง</h2>
-        <p className="mb-1">🎤 คอนเสิร์ต: {ticketInfo.concert}</p>
-        <p className="mb-1">📍 โซน: {ticketInfo.zone}</p>
-        <p className="mb-1">💺 ที่นั่ง: {ticketInfo.seat}</p>
-        <p className="font-semibold text-red-400 mt-2">
-          💵 ราคา: {ticketInfo.price} บาท
-        </p>
+    <div className="max-w-2xl mx-auto p-6 font-sans">
+      <h2 className="text-2xl font-bold text-red-600 mb-4">🎟 สรุปการจอง</h2>
+
+      <div className="bg-gray-900 text-white p-6 rounded-xl shadow mb-6">
+        <p>🎤 คอนเสิร์ต: {event.title}</p>
+        <p>📍 โซน: {zone}</p>
+        <p>💺 ที่นั่ง: {seats.length ? seats.join(", ") : "ยังไม่เลือก"}</p>
+        <p className="font-semibold mt-2">💵 รวม: {total.toLocaleString()} บาท</p>
       </div>
 
-      {/* Payment Form */}
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 border border-gray-700 p-6 rounded-2xl shadow-lg space-y-4 text-white"
+        className="bg-gray-900 p-6 rounded-xl shadow text-white space-y-4"
       >
         <input
           type="text"
@@ -52,7 +72,7 @@ export default function PaymentPage() {
           placeholder="ชื่อ-นามสกุล"
           value={form.name}
           onChange={handleChange}
-          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full p-3 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-800"
           required
         />
         <input
@@ -61,7 +81,7 @@ export default function PaymentPage() {
           placeholder="อีเมล"
           value={form.email}
           onChange={handleChange}
-          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full p-3 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-800"
           required
         />
         <input
@@ -70,13 +90,12 @@ export default function PaymentPage() {
           placeholder="เบอร์โทร"
           value={form.phone}
           onChange={handleChange}
-          className="w-full p-3 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          className="w-full p-3 rounded border border-gray-600 focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-800"
           required
         />
 
-        {/* Payment Method */}
         <div>
-          <h3 className="font-semibold mb-3 text-red-400">วิธีชำระเงิน</h3>
+          <h3 className="font-semibold text-red-400 mb-2">วิธีชำระเงิน</h3>
           <label className="flex items-center gap-2 mb-2 cursor-pointer">
             <input
               type="radio"
@@ -103,7 +122,7 @@ export default function PaymentPage() {
 
         <button
           type="submit"
-          className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition"
+          className="w-full py-3 bg-red-600 rounded-lg font-semibold hover:bg-red-700 transition"
         >
           ✅ ยืนยันการชำระเงิน
         </button>
