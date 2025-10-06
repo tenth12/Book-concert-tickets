@@ -78,7 +78,7 @@ export default function PaymentPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-gray-900 p-6 rounded-xl shadow text-white space-y-4"
+        className="bg-red-100 p-6 rounded-xl shadow text-white space-y-4"
       >
         <input
           type="text"
@@ -110,7 +110,7 @@ export default function PaymentPage() {
 
         <div>
           <h3 className="font-semibold text-red-400 mb-2">วิธีชำระเงิน</h3>
-          <label className="flex items-center gap-2 mb-2 cursor-pointer">
+          <label className="flex items-center gap-2 mb-2 cursor-pointer text-black">
             <input
               type="radio"
               name="method"
@@ -121,7 +121,7 @@ export default function PaymentPage() {
             />
             PromptPay
           </label>
-          <label className="flex items-center gap-2 cursor-pointer">
+          <label className="flex items-center gap-2 cursor-pointer text-black">
             <input
               type="radio"
               name="method"
