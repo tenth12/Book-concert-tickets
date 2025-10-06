@@ -272,7 +272,7 @@ export default function ConcertsPage() {
                 <input
                   type="text"
                   className="w-full border p-2 rounded mt-1"
-                  value={formData.terms.join(",")}
+                  value={(formData.terms || []).join(",")}
                   onChange={(e) => setFormData({ ...formData, terms: e.target.value.split(",") })}
                 />
               </label>
