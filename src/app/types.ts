@@ -3,8 +3,13 @@ export type User = {
   id: string;
   username: string;
   password: string;
-  bookedConcerts: string[];
+  bookedConcerts: {
+    concertId: string;
+    zone: string;
+    seats: string[];
+  }[];
 };
+
 
 export const mockConcerts = [
   { id: "1", name: "PLAVE Asia Tour" },

@@ -19,6 +19,7 @@ export default function LoginPage() {
       return;
     }
     localStorage.setItem('currentUser', JSON.stringify(user));
+    window.dispatchEvent(new Event('login'));
     router.push('/profile');
   };
 

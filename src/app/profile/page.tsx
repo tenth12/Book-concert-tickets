@@ -33,9 +33,16 @@ export default function ProfilePage() {
         <h2 className="text-xl font-semibold mb-4 text-black">คอนเสิร์ตที่จองแล้ว</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           {user.bookedConcerts.length === 0 && <li>ยังไม่มีการจอง</li>}
-          {user.bookedConcerts.map((id) => {
-            const concert = mockConcerts.find((c) => c.id === id);
-            return <li key={id}>{concert?.name || 'Unknown Concert'}</li>;
+          {user.bookedConcerts.map((booking, idx) => {
+            const concert = mockConcerts.find(c => c.id === booking.concertId);
+            return (
+              <li key={idx}>
+                <strong>{concert?.name || "Unknown Concert"}</strong>
+                <div className="ml-4 text-sm text-gray-600">
+                  โซน: {booking.zone}, ที่นั่ง: {booking.seats.join(", ")}
+                </div>
+              </li>
+            );
           })}
         </ul>
         <button

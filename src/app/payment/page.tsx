@@ -1,10 +1,13 @@
 "use client";
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { concerts } from "../../data/mockdata";
+import { User } from "../types";
 
 export default function PaymentPage() {
   const search = useSearchParams();
+  const router = useRouter();
+
   const concertId = search.get("concert") || "";
   const zone = search.get("zone") || "VIP";
   const seats = search.get("seats")?.split(",") || [];
@@ -33,10 +36,9 @@ export default function PaymentPage() {
       alert("กรุณาเลือกที่นั่งก่อนยืนยัน");
       return;
     }
+
     alert(
-      `จองตั๋วสำเร็จ! 🎫\nคอนเสิร์ต: ${event?.title ?? "ไม่พบคอนเสิร์ต"}\nโซน: ${zone}\nที่นั่ง: ${
-        seats.join(", ")
-      }\nรวม: ${total.toLocaleString()} บาท\nวิธีชำระเงิน: ${form.method}`
+      `จองตั๋วสำเร็จ! 🎫\nคอนเสิร์ต: ${event?.title ?? "ไม่พบคอนเสิร์ต"}\nโซน: ${zone}\nที่นั่ง: ${seats.join(", ")}\nรวม: ${total.toLocaleString()} บาท\nวิธีชำระเงิน: ${form.method}`
     );
 
     console.log("ส่งข้อมูลไป backend:", {
@@ -46,6 +48,18 @@ export default function PaymentPage() {
       seats,
       total,
     });
+
+    // อัปเดต bookedConcerts ของผู้ใช้ใน localStorage
+    const storedUser = localStorage.getItem("currentUser");
+    if (storedUser) {
+      const currentUser: User = JSON.parse(storedUser);
+      if (!currentUser.bookedConcerts) currentUser.bookedConcerts = [];
+      currentUser.bookedConcerts.push({ concertId, zone, seats });
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    }
+
+    // กลับไปหน้าโปรไฟล์
+    router.push("/profile");
   };
 
   if (!event)
