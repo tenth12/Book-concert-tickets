@@ -1,4 +1,5 @@
-"use client";
+"use client"; 
+
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { concerts } from "../../data/mockdata";
@@ -7,7 +8,6 @@ import { User } from "../types";
 export default function PaymentPage() {
   const search = useSearchParams();
   const router = useRouter();
-
   const concertId = search.get("concert") || "";
   const zone = search.get("zone") || "VIP";
   const seats = search.get("seats")?.split(",") || [];
