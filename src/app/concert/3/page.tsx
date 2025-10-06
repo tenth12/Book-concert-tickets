@@ -122,9 +122,7 @@ const magicmanEvent: Event = {
 
               <div className="mt-4 flex gap-3">
                 <a
-                  href={magicmanEvent.purchaseUrl}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="/select-zone"
                   className="inline-block px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
                 >
                   Buy Tickets

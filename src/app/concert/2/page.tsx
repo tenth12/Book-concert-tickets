@@ -100,14 +100,14 @@ export default function ConcertPage() {
               <div className="mt-3">
                 <div className="font-semibold text-red-600">Prices</div>
                 <div className="text-lg font-bold text-gray-900">
-                  {event.prices.join(" / ")} ฿
+                  {event.prices.join(" src\app\select-zone\page.tsx ")} ฿
                 </div>
               </div>
 
               <div className="mt-4 flex gap-3">
+                {/* Route to internal zone selection page for booking */}
                 <a
-                  href={event.purchaseUrl}
-                  target="_blank"
+                  href="/select-zone"
                   className="inline-block px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
                 >
                   Buy Tickets

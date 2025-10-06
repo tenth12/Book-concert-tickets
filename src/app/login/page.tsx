@@ -55,6 +55,13 @@ export default function LoginPage() {
           >
             สมัครสมาชิก
           </span>
+          <br />
+          <span
+            onClick={() => router.push('/admin')}
+            className="text-red-600 cursor-pointer hover:underline"
+          >
+            ไปที่ Admin
+          </span>
         </p>
       </div>
     </div>
