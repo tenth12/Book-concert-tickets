@@ -143,7 +143,7 @@ export default function ReportsPage() {
 
       {/* กราฟสรุป */}
       <div className="bg-white shadow-md rounded-lg p-6 w-full h-[500px]">
-        {/* @ts-expect-error */}
+        {/* @ts-expect-error: dynamic import ของ Bar chart */}
         <Bar data={chartData} options={chartOptions} />
       </div>
     </div>
