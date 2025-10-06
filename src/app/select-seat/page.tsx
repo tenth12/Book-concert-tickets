@@ -69,7 +69,7 @@ export default function SelectSeatPage() {
   }
 
   return (
-    <div style={{ padding: 20, fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ padding: 20, fontFamily: 'Inter, system-ui, sans-serif', color: '#000' }}>
       <h2 style={{ marginBottom: 12 }}>เลือกที่นั่ง — โซน: <span style={{ color: zoneColor }}>{zone}</span></h2>
 
       <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start' }}>
@@ -91,7 +91,7 @@ export default function SelectSeatPage() {
                     width: 40,
                     height: 34,
                     background: s.taken ? '#222' : isSelected ? '#ffd54f' : '#fff',
-                    color: s.taken ? '#666' : '#111',
+                    color: s.taken ? '#666' : '#000',
                     border: s.taken ? '1px solid #333' : `2px solid ${isSelected ? '#ffaa00' : zoneColor}`,
                     borderRadius: 6,
                     cursor: s.taken ? 'not-allowed' : 'pointer',
@@ -134,7 +134,7 @@ export default function SelectSeatPage() {
             <p>ราคา/ที่นั่ง: <strong>{price.toLocaleString()}.-</strong></p>
             <p>ที่เลือก: <strong>{selected.length > 0 ? selected.join(', ') : 'ยังไม่เลือก'}</strong></p>
             <p>รวม: <strong>{total.toLocaleString()}.-</strong></p>
-            <p style={{ color: '#666', fontSize: 13 }}>คุณสามารถเลือกได้สูงสุด {MAX_SELECT} ที่นั่ง</p>
+            <p style={{ color: '#000', fontSize: 13 }}>คุณสามารถเลือกได้สูงสุด {MAX_SELECT} ที่นั่ง</p>
 
             <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
               <button onClick={() => router.back()} style={{ padding: '8px 12px' }}>ย้อนกลับ</button>

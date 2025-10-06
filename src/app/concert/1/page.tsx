@@ -65,8 +65,7 @@ export default function ConcertDetail({ event = defaultEvent }) {
 
               <div className="mt-4 flex gap-3">
                 <a
-                  className="inline-block px-4 py-2 bg-gray-400 text-white rounded-lg shadow"
-                  aria-disabled
+                  className="inline-block px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700"
                 >
                   Sold Out
                 </a>
@@ -76,8 +75,6 @@ export default function ConcertDetail({ event = defaultEvent }) {
                 >
                   Copy Link
                 </button>
-                {/* Link to select-zone for booking flow (disabled when sold out) */}
-                {/* If event were available, we'd render: <Link href="/select-zone"><a className="...">Book</a></Link> */}
               </div>
             </div>
           </div>

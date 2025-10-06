@@ -23,11 +23,11 @@ export default function SelectZonePage() {
   }
 
   return (
-    <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif' }}>
+    <div style={{ padding: 24, fontFamily: 'Inter, system-ui, sans-serif', color: '#000' }}>
       <h1 style={{ textAlign: 'center' }}>เลือกโซนที่นั่ง</h1>
 
       <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start', justifyContent: 'center' }}>
-        <div style={{ width: 520, background: '#111', color: '#fff', padding: 16, borderRadius: 6 }}>
+        <div style={{ width: 520, background: '#f0f0f0', color: '#000', padding: 16, borderRadius: 6 }}>
           <div style={{ textAlign: 'center', marginBottom: 12, fontSize: 14 }}>CONCERT PLAN</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {zones.map((z) => (
