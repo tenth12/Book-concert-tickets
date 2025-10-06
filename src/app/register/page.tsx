@@ -24,7 +24,8 @@ export default function RegisterPage() {
     users.push(newUser);
     localStorage.setItem('users', JSON.stringify(users));
     localStorage.setItem('currentUser', JSON.stringify(newUser));
-    router.push('/profile');
+    router.push('/login');
+    alert('สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ')
   };
 
   return (

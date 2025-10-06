@@ -26,7 +26,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white shadow-lg rounded-xl p-8 w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-red-600 mb-6">
+        <h1 className="text-2xl font-bold text-center text-red-600 mb-6 ">
           เข้าสู่ระบบ
         </h1>
         <input
@@ -57,6 +57,8 @@ export default function LoginPage() {
             สมัครสมาชิก
           </span>
           <br />
+          <br />
+          คุณคือแอดมิน?{" "}
           <span
             onClick={() => router.push('/admin')}
             className="text-red-600 cursor-pointer hover:underline"

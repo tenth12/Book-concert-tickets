@@ -28,7 +28,7 @@ body {
 input {
   font-family: var(--font-sans);
   background-color: transparent;
-  color: var(--foreground);
+  color: var(--color-black);
   border: 1px solid #ccc; /* Or use a variable like var(--foreground) */
 }
 
